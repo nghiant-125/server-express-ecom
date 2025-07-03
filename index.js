@@ -4,7 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
 
-const mongoURL = "mongodb://14.225.198.168:27017/k23-ecom-db";
+const mongoURL = "mongodb://127.0.0.1:27017/k23-ecom-db";
 mongoose.connect(mongoURL).then(() => {
     console.log("MongoDB connected");
   }).catch(err => {
