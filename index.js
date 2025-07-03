@@ -50,6 +50,43 @@ app.post("/products", async (req, res) => {
     }
 });
 
+app.put("/products/:id", async (req, res) => {
+    const { id } = req.params;
+    const { name, price, description } = req.body;
+
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(
+            id,
+            { name, price, description },
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        res.json(updatedProduct);
+    } catch (error) {
+        console.error("Error updating product:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+app.delete("/products/:id", async (req, res) => {
+        const { id } = req.params;
+        try {
+        const deletedProduct = await Product.findByIdAndDelete(id);
+
+        if (!deletedProduct) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        res.json({ message: "Product deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting product:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
 app.listen(5050, () => {
   console.log("Server is running on port 5050");
 });
